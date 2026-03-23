@@ -20,7 +20,7 @@ class _GenderToggleState extends State<Prueba> {
           });
         },
         child: Container(
-          width: 280,
+          width: 250,
           height: 40,
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(

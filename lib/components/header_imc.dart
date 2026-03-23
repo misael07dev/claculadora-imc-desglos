@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:imc_calculador/components/image_login.dart';
 import 'package:imc_calculador/core/app_text.dart';
@@ -8,28 +9,30 @@ class HeaderIMC extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeigth = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return SizedBox(
-      height: screenWidth * 0.50, // 🔥 ocupa toda la pantalla
+      height: 0.3.sh, // 50% de la altura de la pantalla
+      width: 1.sw, // ancho completo
       child: Stack(
         children: [
-          // 🔵 FONDO REAL (pantalla completa)
+          // 🌊 Fondo con imagen escalable
           Positioned(
-            top: screenHeigth * 0.06, // 10% desde arriba
-            left: screenWidth * 0.05, // 5% desde la izquierda
-            right: screenWidth * 0.05,
-            child: ImageLogin(),
+            top: 0.06.sh,
+            left: 0.01.sw,
+            right: 0.01.sw,
+            child: ImageLogin(
+              width: 0.9.sw, // ancho proporcional al dispositivo
+              height: 0.3.sh, // alto proporcional
+            ),
           ),
 
-          // ✂️ HEADER ARRIBA
+          // ✂️ ClipPath con logo y textos
           Column(
             children: [
               ClipPath(
                 clipper: MyClipper(),
                 child: SizedBox(
-                  height: screenHeigth * 0.12,
+                  height: 0.17.sh, // un poco más alto que antes
+                  width: 1.sw,
                   child: Stack(
                     children: [
                       Container(color: const Color(0xFF126BB4)),
@@ -45,24 +48,26 @@ class HeaderIMC extends StatelessWidget {
                           children: [
                             SvgPicture.asset(
                               "assets/image/logo.svg",
-                              width: 50,
-                              height: 30,
+                              width: 50.w,
+                              height: 30.h,
                             ),
-                            const SizedBox(height: 1),
+                            SizedBox(
+                              height: 2.h,
+                            ), // espacio mayor entre logo y texto
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
+                                Text(
                                   "Calculadora de ",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 25,
+                                    fontSize: 25.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 ImcText(
                                   color: Colors.white,
-                                  tituloFontSize: 25,
+                                  tituloFontSize: 25.sp,
                                 ),
                               ],
                             ),
@@ -74,7 +79,7 @@ class HeaderIMC extends StatelessWidget {
                 ),
               ),
 
-              // 🔻 ESPACIO RESTANTE
+              // Espacio restante
               Expanded(child: Container()),
             ],
           ),
@@ -84,30 +89,27 @@ class HeaderIMC extends StatelessWidget {
   }
 }
 
+// ✨ Custom Painter
 class LeftShapePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = const Color(0xFF3B82F6);
 
     final path = Path();
-
     path.moveTo(0, 0);
     path.lineTo(size.width * 0.5, 0);
-
     path.quadraticBezierTo(
       size.width * 0.4,
       size.height * 0.4,
       size.width * 0.1,
       size.height * 0.7,
     );
-
     path.quadraticBezierTo(
       size.width * 0.1,
       size.height * 0.7,
       0,
       size.height * 0.8,
     );
-
     path.lineTo(0, 0);
     path.close();
 
@@ -118,6 +120,7 @@ class LeftShapePainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
+// ✨ Clipper
 class MyClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -144,12 +147,9 @@ class MyClipper extends CustomClipper<Path> {
     path.lineTo(size.width, 0);
 
     path.close();
-
     return path;
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
-  }
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

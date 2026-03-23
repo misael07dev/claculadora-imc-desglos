@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imc_calculador/components/ageslider.dart';
 import 'package:imc_calculador/components/gender_selector.dart';
 import 'package:imc_calculador/components/heigth_and_weigth.dart';
@@ -14,45 +15,49 @@ class Calculator extends StatefulWidget {
 class _CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min, // evita que se estire
-      children: [
-        SizedBox(height: 11),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Calcula tu ",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                height: 0,
+    return SizedBox(
+      height: 0.9.sh, // altura de la card
+      width: 1.sw,
+      child: Stack(
+        children: [
+          // 📌 Textos centrados
+          Column(
+            children: [
+              SizedBox(height: 20.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Calcula tu ",
+                    style: TextStyle(
+                      fontSize: 30.sp,
+                      fontWeight: FontWeight.bold,
+                      height: 1.2,
+                    ),
+                  ),
+                  ImcText(color: const Color(0xFF126BB4)),
+                ],
               ),
-            ),
-            ImcText(color: const Color(0xFF126BB4)),
-          ],
-        ),
+              SizedBox(height: 4.h),
+              Text(
+                "Índice de Masa Corporal",
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                  height: 1.2,
+                ),
+              ),
 
-        SizedBox(height: 0), // controla separación
+              // 📌 Controles posicionados libremente
+              GenderSelector(),
 
-        Text(
-          "Índice de Masa Corporal",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            height: 0,
+              HeigthAndWeigth(),
+
+              AgeSlider(),
+            ],
           ),
-        ),
-        SizedBox(height: 10),
-        GenderSelector(), //  aquí llamas la clase
-        SizedBox(height: 15),
-        HeigthAndWeigth(),
-        SizedBox(height: 15),
-        AgeSlider(),
-        SizedBox(height: 15),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imc_calculador/components/header_imc.dart';
 import 'package:imc_calculador/components/login_button.dart';
 import 'package:imc_calculador/core/app_text.dart';
@@ -37,65 +38,82 @@ class _LoginScreensState extends State<LoginScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            HeaderIMC(),
-            SizedBox(height: 10),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                HeaderIMC(),
 
-            SizedBox(
-              child: Column(
-                children: [
-                  Text(
-                    "Bienvenido a la",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
+                SizedBox(height: 10.h),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Calculadora de ",
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
+                // TEXTOS
+                Column(
+                  children: [
+                    Text(
+                      "Bienvenido a la",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 25.sp,
+                        fontWeight: FontWeight.bold,
                       ),
-                      ImcText(color: Color(0xFF126BB4)),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Inicia sesión para continuar",
-                        style: TextStyle(
-                          fontSize: 18,
+                    ),
 
-                          color: const Color(0xFF838383),
+                    SizedBox(height: 5.h),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            "Calculadora de ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 25.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                        ImcText(color: const Color(0xFF126BB4)),
+                      ],
+                    ),
 
-            SizedBox(height: 10),
-            LoginButton(
-              onPressed: () async {
-                await signInWithGoogle();
-              },
+                    SizedBox(height: 5.h),
+
+                    Text(
+                      "Inicia sesión para continuar",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        color: const Color(0xFF838383),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 20.h),
+
+                // BOTÓN LOGIN
+                LoginButton(
+                  onPressed: () async {
+                    await signInWithGoogle();
+                  },
+                ),
+
+                SizedBox(height: 25.h),
+
+                Text(
+                  "Cuida tu salud, ¡vive mejor!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    color: const Color.fromARGB(255, 71, 71, 71),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 25),
-            Text(
-              "Cuida tu salud, ¡vive mejor!",
-              style: TextStyle(
-                fontSize: 18,
-                color: const Color.fromARGB(255, 71, 71, 71),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
