@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "159480987412",
+    "project_id": "imc-calculator-bd2df",
+    "storage_bucket": "imc-calculator-bd2df.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159480987412:android:91528c89c82822b2c78c01",
+        "android_client_info": {
+          "package_name": "com.example.imc_calculador"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159480987412-ja4u82n4dr0jq09qk2oo5tdpant9ig65.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.imc_calculador",
+            "certificate_hash": "f42ef337febf69f3f930578c50509a9a8af76def"
+          }
+        },
+        {
+          "client_id": "159480987412-99a904g93uf13egbscr5ap6uf5ij4sdp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhYZrvueoIHr-ZOaiVgoBfnWS0SjUomgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159480987412-99a904g93uf13egbscr5ap6uf5ij4sdp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "159480987412-o4tp53l28u2mt8plqj01ne83km5vbino.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.imcCalculador"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
