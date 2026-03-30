@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Prueba extends StatefulWidget {
   const Prueba({super.key});
@@ -20,11 +21,11 @@ class _GenderToggleState extends State<Prueba> {
           });
         },
         child: Container(
-          width: 250,
-          height: 40,
+          width: 265.w,
+          height: 40.h,
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
-            color: Colors.grey[300],
+            color: const Color(0xFFE9E9E9),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Stack(
@@ -37,7 +38,7 @@ class _GenderToggleState extends State<Prueba> {
                     ? Alignment.centerLeft
                     : Alignment.centerRight,
                 child: Container(
-                  width: 140,
+                  width: 132.5.w,
                   decoration: BoxDecoration(
                     color: const Color(0xFF126BB4),
                     borderRadius: BorderRadius.circular(30),

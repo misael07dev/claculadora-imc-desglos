@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:imc_calculador/components/image_login.dart';
+import 'package:imc_calculador/components/appsvg.dart';
+
 import 'package:imc_calculador/core/app_text.dart';
+import 'package:imc_calculador/core/appcolor.dart';
 
 class HeaderIMC extends StatelessWidget {
   const HeaderIMC({super.key});
@@ -10,38 +12,46 @@ class HeaderIMC extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 0.3.sh, // 50% de la altura de la pantalla
-      width: 1.sw, // ancho completo
+      height: 0.3.sh,
+      width: 1.sw,
       child: Stack(
         children: [
-          // 🌊 Fondo con imagen escalable
+          // 🌊 Fondo con imagen
           Positioned(
             top: 0.06.sh,
             left: 0.01.sw,
             right: 0.01.sw,
-            child: ImageLogin(
-              width: 0.9.sw, // ancho proporcional al dispositivo
-              height: 0.3.sh, // alto proporcional
-            ),
+            child: Appsvg(width: 0.9.sw, height: 0.3.sh),
           ),
 
-          // ✂️ ClipPath con logo y textos
+          // ✂️ Header con degradado + shapes
           Column(
             children: [
               ClipPath(
                 clipper: MyClipper(),
                 child: SizedBox(
-                  height: 0.17.sh, // un poco más alto que antes
+                  height: 0.17.sh,
                   width: 1.sw,
                   child: Stack(
                     children: [
-                      Container(color: const Color(0xFF126BB4)),
+                      // 🎨 Fondo con degradado (en lugar de color sólido)
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [AppColors.primary, AppColors.secondary],
+                          ),
+                        ),
+                      ),
 
+                      // 🎨 Shape lateral con degradado
                       CustomPaint(
                         size: Size.infinite,
                         painter: LeftShapePainter(),
                       ),
 
+                      // 🧠 Contenido centrado
                       Center(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -51,9 +61,7 @@ class HeaderIMC extends StatelessWidget {
                               width: 50.w,
                               height: 30.h,
                             ),
-                            SizedBox(
-                              height: 2.h,
-                            ), // espacio mayor entre logo y texto
+                            SizedBox(height: 2.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -67,7 +75,7 @@ class HeaderIMC extends StatelessWidget {
                                 ),
                                 ImcText(
                                   color: Colors.white,
-                                  tituloFontSize: 25.sp,
+                                  tituloFontSize: 30.sp,
                                 ),
                               ],
                             ),
@@ -79,7 +87,6 @@ class HeaderIMC extends StatelessWidget {
                 ),
               ),
 
-              // Espacio restante
               Expanded(child: Container()),
             ],
           ),
@@ -89,11 +96,18 @@ class HeaderIMC extends StatelessWidget {
   }
 }
 
-// ✨ Custom Painter
+// 🎨 Custom Painter con degradado
 class LeftShapePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = const Color(0xFF3B82F6);
+    final rect = Offset.zero & size;
+
+    final paint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [AppColors.primary, AppColors.secondary],
+      ).createShader(rect);
 
     final path = Path();
     path.moveTo(0, 0);
@@ -120,7 +134,7 @@ class LeftShapePainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
-// ✨ Clipper
+// ✂️ Clipper
 class MyClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {

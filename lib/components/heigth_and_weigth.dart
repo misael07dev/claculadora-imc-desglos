@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:imc_calculador/core/appcolor.dart';
 
 class HeigthAndWeigth extends StatefulWidget {
-  const HeigthAndWeigth({super.key});
+  final Function(double altura, double peso) onValueChange;
+  const HeigthAndWeigth({super.key, required this.onValueChange});
 
   @override
   State<HeigthAndWeigth> createState() => _HeigthAndWeigthState();
@@ -23,19 +25,17 @@ class _HeigthAndWeigthState extends State<HeigthAndWeigth> {
         /// TITULOS
         Row(
           children: [
-            Icon(Icons.height, color: const Color(0xFF126BB4)),
+            Icon(Icons.height, color: AppColors.primary),
             const SizedBox(width: 5),
             const Text("Altura", style: TextStyle(fontWeight: FontWeight.bold)),
 
             SizedBox(width: 120.w),
 
-            Icon(Icons.people_sharp, color: const Color(0xFF126BB4)),
+            Icon(Icons.people_sharp, color: AppColors.primary),
             const SizedBox(width: 5),
             const Text("Peso", style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
-
-        const SizedBox(height: 8),
 
         /// INPUTS
         Row(
@@ -43,11 +43,11 @@ class _HeigthAndWeigthState extends State<HeigthAndWeigth> {
             /// ALTURA
             Container(
               height: 35.h,
-              width: 140.w,
+              width: 155.w,
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 177, 176, 175),
+                color: AppColors.background,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.black),
+                border: Border.all(color: AppColors.border),
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 6,
@@ -64,6 +64,14 @@ class _HeigthAndWeigthState extends State<HeigthAndWeigth> {
                       child: TextField(
                         controller: heightController,
                         keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          final altura =
+                              double.tryParse(heightController.text) ?? 0;
+                          final peso =
+                              double.tryParse(weightController.text) ?? 0;
+                          widget.onValueChange(altura, peso);
+                          double.tryParse(weightController.text) ?? 0;
+                        },
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: "0",
@@ -77,7 +85,7 @@ class _HeigthAndWeigthState extends State<HeigthAndWeigth> {
                   Container(
                     width: 1,
                     height: double.infinity,
-                    color: Colors.black,
+                    color: AppColors.border,
                   ),
 
                   /// SELECTOR
@@ -98,16 +106,16 @@ class _HeigthAndWeigthState extends State<HeigthAndWeigth> {
             /// PESO
             Container(
               height: 35.h,
-              width: 140.w,
+              width: 155.w,
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 177, 176, 175),
+                color: AppColors.background,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.black),
+                border: Border.all(color: AppColors.border),
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 6,
                     offset: const Offset(0, 2),
-                    color: Colors.black.withOpacity(0.3),
+                    color: const Color(0xFF000000).withOpacity(0.3),
                   ),
                 ],
               ),
@@ -119,6 +127,14 @@ class _HeigthAndWeigthState extends State<HeigthAndWeigth> {
                       child: TextField(
                         controller: weightController,
                         keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          final altura =
+                              double.tryParse(heightController.text) ?? 0;
+                          final peso =
+                              double.tryParse(weightController.text) ?? 0;
+                          widget.onValueChange(altura, peso);
+                          double.tryParse(weightController.text) ?? 0;
+                        },
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: "0",
@@ -132,7 +148,7 @@ class _HeigthAndWeigthState extends State<HeigthAndWeigth> {
                   Container(
                     width: 1,
                     height: double.infinity,
-                    color: Colors.black,
+                    color: AppColors.border,
                   ),
 
                   /// SELECTOR
@@ -171,11 +187,38 @@ class _HeigthAndWeigthState extends State<HeigthAndWeigth> {
               onTap: () {
                 setState(() {
                   if (isHeight) {
+                    double altura = double.tryParse(heightController.text) ?? 0;
+
+                    // 🔥 CONVERSIÓN ALTURA
+                    if (tipoHeight == "cm" && unit == "ft") {
+                      altura = altura / 30.48;
+                    } else if (tipoHeight == "ft" && unit == "cm") {
+                      altura = altura * 30.48;
+                    }
+
+                    heightController.text = altura.toStringAsFixed(2);
                     tipoHeight = unit;
                   } else {
+                    double peso = double.tryParse(weightController.text) ?? 0;
+
+                    // 🔥 CONVERSIÓN PESO
+                    if (tipoWeight == "kg" && unit == "lb") {
+                      peso = peso * 2.20462;
+                    } else if (tipoWeight == "lb" && unit == "kg") {
+                      peso = peso / 2.20462;
+                    }
+
+                    weightController.text = peso.toStringAsFixed(2);
                     tipoWeight = unit;
                   }
                 });
+
+                // 🔥 ENVIAR AL PADRE (IMPORTANTE)
+                final altura = double.tryParse(heightController.text) ?? 0;
+                final peso = double.tryParse(weightController.text) ?? 0;
+
+                widget.onValueChange(altura, peso);
+
                 Navigator.pop(context);
               },
             );

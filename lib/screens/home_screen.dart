@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imc_calculador/components/calculator.dart';
 import 'package:imc_calculador/components/header_imc.dart';
+import 'package:imc_calculador/core/appcolor.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -39,7 +40,7 @@ class HomeScreen extends StatelessWidget {
               child: ClipPath(
                 clipper: MyCustomCard(),
                 child: Container(
-                  color: Colors.white,
+                  color: AppColors.background,
                   child: const Calculator(),
                 ),
               ),

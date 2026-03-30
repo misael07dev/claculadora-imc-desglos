@@ -4,9 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'firebase_options.dart';
 import 'package:imc_calculador/screens/login_screens.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // solo vertical
+  ]);
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Inicializar Ads
+  await MobileAds.instance.initialize();
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -46,14 +56,12 @@ class TransparentStatusBarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true, // permite que el body llegue hasta arriba
+      extendBodyBehindAppBar: true,
       body: MediaQuery.removePadding(
         context: context,
-        removeTop:
-            true, // ⚡ elimina el padding que reserva Flutter para la barra
+        removeTop: true,
         child: Stack(
           children: [
-            // Fondo
             Container(
               width: double.infinity,
               height: double.infinity,
@@ -65,7 +73,6 @@ class TransparentStatusBarScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Contenido de tu pantalla
             const LoginScreens(),
           ],
         ),
